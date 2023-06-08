@@ -1,0 +1,2 @@
+### GET ALL LANGUAGE
+GET http://localhost:8080/greet
