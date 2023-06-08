@@ -5,6 +5,14 @@ server:
 
 spring:
   datasource:
+
+#    For local database config
+
+#    url: jdbc:postgresql://localhost:5432/customer
+#    username: amigoscode
+#    password: password
+
+# for docker database config
     url: jdbc:postgresql://localhost:5332/customer
     username: amigoscode
     password: password
@@ -14,7 +22,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        dialect: org.hibernate.dialect.PostgreSQL92Dialect
         format_sql: true
     show-sql: true
   main:
