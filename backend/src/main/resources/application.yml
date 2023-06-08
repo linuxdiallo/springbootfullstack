@@ -14,7 +14,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
         format_sql: true
     show-sql: true
   main:
