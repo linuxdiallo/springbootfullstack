@@ -12,5 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PinpongController {
 
-    record PinPong(String result){}
+    record PingPong(String result){}
+
+    public PingPong getPingPong() {
+        return new PingPong("Result");
+    }
 }
