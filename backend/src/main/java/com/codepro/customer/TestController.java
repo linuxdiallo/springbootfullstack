@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    record PingPong(String resul){};
+    record PingPong(String result){};
 
     @GetMapping("/pingpong")
     public PingPong getPingPong() {
-        return new PingPong("pingpong");
+        return new PingPong("hola pingpong!");
     }
 }
