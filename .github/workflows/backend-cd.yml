@@ -32,7 +32,6 @@ jobs:
 
     steps:
       - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
         with:
             status: ${{ job.status }}
             fields: repo,message
@@ -54,7 +53,6 @@ jobs:
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
       - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
         with:
           status: ${{ job.status }}
           fields: repo,message
@@ -64,7 +62,6 @@ jobs:
       - name: Build Package Push with Maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
       - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
         with:
           status: ${{ job.status }}
           fields: repo,message
@@ -79,7 +76,6 @@ jobs:
           echo "Dockerrun.aws.json after updating tag"
           cat Dockerrun.aws.json
       - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
         with:
           status: ${{ job.status }}
           fields: repo,message
@@ -98,7 +94,6 @@ jobs:
           region: ${{ secrets.EB_REGION }}
           deployment_package: backend/Dockerrun.aws.json
       - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
         with:
           status: ${{ job.status }}
           fields: repo,message
@@ -113,7 +108,6 @@ jobs:
           git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push
       - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
         with:
           status: ${{ job.status }}
           fields: repo,message
@@ -122,11 +116,3 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
         if: always()
-      - uses: 8398a7/action-slack@v3
-        id: Send Hello Slack Message
-        with:
-          status: ${{ job.status }}
-          fields: repo,message
-          text: 'Deployment and commit completed :github-check-mark: :party_blob: - http://amigoscode-api-env.eba-75dkuu43.eu-west-1.elasticbeanstalk.com/'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
