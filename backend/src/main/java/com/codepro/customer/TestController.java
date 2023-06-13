@@ -19,5 +19,6 @@ public class TestController {
     @GetMapping("/pingpong")
     public PingPong getPingPong() {
         return new PingPong("hola pingpong!");
+
     }
 }
