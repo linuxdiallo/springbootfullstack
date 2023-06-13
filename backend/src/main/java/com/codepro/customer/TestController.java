@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-
+    private static int COUNT = 0;
     record PingPong(String result){};
 
-    @GetMapping("/pingpong")
+    @GetMapping("/ping")
     public PingPong getPingPong() {
-        return new PingPong("hola pingpong!");
+        return new PingPong("Pong: %s".formatted(++COUNT));
 
     }
 }
