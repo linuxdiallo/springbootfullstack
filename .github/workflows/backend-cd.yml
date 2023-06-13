@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - backend/**
+      - .github/**
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -34,7 +36,7 @@ jobs:
               fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
               text: 'CICD ongoing... :eyes:'
         env:
-              SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
