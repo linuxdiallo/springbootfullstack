@@ -28,7 +28,7 @@ jobs:
           --health-retries 5
     defaults:
       run:
-        working-directory: ./backend
+        working-directory: /backend
 
     steps:
       - uses: 8398a7/action-slack@v3
