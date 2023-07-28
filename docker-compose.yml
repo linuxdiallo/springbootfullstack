@@ -39,7 +39,7 @@ services:
 #    ports:
 #      - "5050:80"
 #    networks:
-#      - postgres
+#      - db
 #    restart: unless-stopped
 #    depends_on:
 #      - db
@@ -50,4 +50,4 @@ networks:
 
 volumes:
   postgres:
-#  pgadmin:
+  #pgadmin:

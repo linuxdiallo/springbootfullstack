@@ -27,3 +27,7 @@ spring:
     show-sql: true
   main:
     web-application-type: servlet
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
