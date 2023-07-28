@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - backend/**
+      - .github/**
   workflow_dispatch:
 
 jobs:
@@ -27,7 +28,7 @@ jobs:
           --health-retries 5
     defaults:
       run:
-        working-directory: /backend
+        working-directory: backend
 
     steps:
       - uses: actions/checkout@v3
