@@ -14,18 +14,18 @@ services:
       - db
     restart: unless-stopped
 
-#  amigoscode-api:
-#    container_name: amigoscode-api
-#    image: aboubacar/amigoscode-api
-#    environment:
-#       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/customer
-#    ports:
-#      - "8088:8080"
-#    networks:
-#      - db
-#    depends_on:
-#      - db
-#    restart: unless-stopped
+  amigoscode-api:
+    container_name: amigoscode-api
+    image: aboubacar/amigoscode-api
+    environment:
+       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/customer
+    ports:
+      - "8088:8080"
+    networks:
+      - db
+    depends_on:
+      - db
+    restart: unless-stopped
 
 #  pgadmin:
 #    container_name: pgadmin
