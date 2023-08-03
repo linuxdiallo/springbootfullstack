@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "amigoscode-react",
-      "image": "aboubacar/amigoscode-react:latest",
+      "image": "aboubacar/amigoscode-react:03.08.2023.20.47.19",
       "essential": true,
       "memory": 256,
       "portMappings": [
