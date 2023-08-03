@@ -6,6 +6,7 @@ const notificaton = (title, description, status) => {
     toast({
         title,
         description,
+        position:'top-right',
         status,
         isClosable : true,
         duration: 4000
