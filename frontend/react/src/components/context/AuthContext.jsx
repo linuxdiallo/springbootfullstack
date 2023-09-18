@@ -58,15 +58,14 @@ const AuthProvider = ({children}) => {
             return false;
         }
         const decodedToken = jwtDecode(token);
-
         const {exp: expiration} = decodedToken;
 
         if (Date.now() > expiration * 1000) {
+            logOut();
             return false;
         }
 
         return true
-
     }
 
     return (

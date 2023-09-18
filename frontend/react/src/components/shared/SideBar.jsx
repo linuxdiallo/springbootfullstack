@@ -33,6 +33,7 @@ import {
 } from 'react-icons/fi'
 import React from "react";
 import {useAuth} from "../context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 const LinkItems = [
@@ -112,6 +113,7 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
     const { logOut, customer } = useAuth();
+    const navigate = useNavigate();
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -172,7 +174,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
                             <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
+                            <MenuItem onClick={() => navigate("/setting")}>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuDivider />
                             <MenuItem onClick={logOut}>Sign out</MenuItem>

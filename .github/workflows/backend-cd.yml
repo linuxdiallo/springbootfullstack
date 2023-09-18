@@ -40,7 +40,7 @@ jobs:
       - name: Send Slack Message
         run: >
             curl -X POST -H 'Content-type: application/json'
-            --data '{"text":"Deployment started :progress_bar: :fingerscrossed:"}' 
+            --data '{"text":":spring-boot: Deployment started :progress_bar: :fingerscrossed:"}' 
             ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/setup-java@v3
         with:
@@ -105,11 +105,11 @@ jobs:
       - name: Send Slack Message
         run: >
             curl -X POST -H 'Content-type: application/json' 
-            --data '{"text":"Deployment and commit completed :github-check-mark: :party_blob: -http://amigoscode-api-env.eba-geimmdew.eu-west-1.elasticbeanstalk.com"}' 
+            --data '{"text":"Deployment and commit completed :github-check-mark: :party_blob:  :aws_ecs: -http://amigoscode-api-env.eba-geimmdew.eu-west-1.elasticbeanstalk.com"}' 
             ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         if: always()
         run: >
             curl -X POST -H 'Content-type: application/json' 
-            --data '{"text":"Job Status ${{ job.status }}"}' 
+            --data '{"text":":gitlab-success: Job Status ${{ job.status }}"}' 
             ${{ secrets.SLACK_WEBHOOK_URL }}

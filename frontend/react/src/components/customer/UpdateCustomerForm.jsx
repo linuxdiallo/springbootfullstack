@@ -11,6 +11,7 @@ import {
     Stack} from "@chakra-ui/react";
 import {saveCustomer, updateCustomer} from "../../services/client.js";
 import {errorNotification, successNotification} from "../../services/notification.js";
+import {useAuth} from "../context/AuthContext.jsx";
 
 const MyTextInput = ({ label, ...props }) => {
     // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -52,7 +53,6 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
                 onSubmit={(updatedCustomer, { setSubmitting }) => {
                     setSubmitting(true)
                      updateCustomer(customerId, updatedCustomer).then(res => {
-                         console.log(res);
                          successNotification(
                              "Customer updated",
                              `${updatedCustomer.name} was successfully updated`
