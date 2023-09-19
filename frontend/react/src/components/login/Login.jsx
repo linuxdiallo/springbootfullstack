@@ -81,7 +81,7 @@ const LoginFrom = () => {
                         <MyTextInput label={"Password"}
                                      name={"password"}
                                      type={"password"}
-                                     placeholder={"Type your password"}
+                                     placeholder={"Type your password here"}
                         />
                         <Button
                             type={"submit"}
