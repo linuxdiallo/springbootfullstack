@@ -105,21 +105,21 @@ const CreateCustomerForm = ({ onSuccess }) => {
                                 label="Name"
                                 name="name"
                                 type="text"
-                                placeholder="Jane"
+                                placeholder="Your name"
                             />
 
                             <MyTextInput
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                placeholder="jane@formik.com"
+                                placeholder="your@email.addres"
                             />
 
                             <MyTextInput
                                 label="Age"
                                 name="age"
                                 type="number"
-                                placeholder="20"
+                                placeholder="Your age"
                             />
 
 
