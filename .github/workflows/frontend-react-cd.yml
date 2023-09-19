@@ -25,7 +25,7 @@ jobs:
       - name: Send slack message
         run: >
           curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Deployment started :progres_bar: :fingerscrossed:"}'
+          --data '{"text":" :react: Deployment started :progres_bar: :fingerscrossed:"}'
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Set build number
         id: build-number
@@ -75,7 +75,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":githubloading: Committing to repo ${{ github.server_url }}/${{ github.repository }}"}' 
+          --data '{"text":":githubloading: Committing and :git-push: pushing to repo ${{ github.server_url }}/${{ github.repository }}"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
         run: |
@@ -87,11 +87,11 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"Deployment and commit completed :github-check-mark: :party_blob: - http://amigoscode-api-env.eba-75dkuu43.eu-west-1.elasticbeanstalk.com/"}' 
+          --data '{"text":"Deployment and commit completed :github-check-mark: :party_blob: :aws_ecs: - http://amigoscode-api-env.eba-75dkuu43.eu-west-1.elasticbeanstalk.com/"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         if: always()
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"Job Status ${{ job.status }}"}' 
+          --data '{"text":":gitlab-success: Job Status ${{ job.status }}"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
