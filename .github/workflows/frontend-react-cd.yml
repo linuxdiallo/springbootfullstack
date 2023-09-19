@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - frontend/react/**
-      - .github/workflows/frontend-react-cd/**
   workflow_dispatch:
 jobs:
   deploy:

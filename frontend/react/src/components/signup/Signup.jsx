@@ -4,8 +4,10 @@ import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.jsx";
 
 const Signup = () => {
-    const { customer, setCustomerFromToken } = useAuth();
+
+    const {setCustomerFromToken} = useAuth();
     const navigate = useNavigate();
+
     return (
         <Stack minH={'100vh'} direction={{base: 'column', md: 'row'}}>
             <Flex p={8} flex={1} alignItems={'center'} justifyContent={'center'}>
