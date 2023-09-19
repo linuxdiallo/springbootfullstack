@@ -2,18 +2,10 @@ import {Flex, Heading, Image, Link, Stack, Text} from "@chakra-ui/react";
 import CreateCustomerForm from "../shared/CreateCustomerForm.jsx";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.jsx";
-import {useEffect} from "react";
 
 const Signup = () => {
     const { customer, setCustomerFromToken } = useAuth();
     const navigate = useNavigate();
-
-   /* useEffect( () => {
-        if (customer) {
-            navigate("/dashboard");
-        }
-    })*/
-
     return (
         <Stack minH={'100vh'} direction={{base: 'column', md: 'row'}}>
             <Flex p={8} flex={1} alignItems={'center'} justifyContent={'center'}>
