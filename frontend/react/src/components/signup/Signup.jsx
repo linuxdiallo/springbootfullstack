@@ -20,7 +20,7 @@ const Signup = () => {
                             alt={"Amigoscode Logo"}
                             m={4}
                         />
-                        <Heading fontSize={'2xl'} mb={4}>Register for an account</Heading>
+                        <Heading fontSize={'2xl'} mb={4}>Register for a new account</Heading>
                     </Flex>
                     <CreateCustomerForm onSuccess={(token) => {
                         localStorage.setItem("access_token", token);
