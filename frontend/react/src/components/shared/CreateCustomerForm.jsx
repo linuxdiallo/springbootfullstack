@@ -112,7 +112,7 @@ const CreateCustomerForm = ({ onSuccess }) => {
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                placeholder="your@email.addres"
+                                placeholder="your@email.address"
                             />
 
                             <MyTextInput
