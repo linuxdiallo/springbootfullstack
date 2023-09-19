@@ -65,7 +65,6 @@ const AuthProvider = ({children}) => {
             logOut();
             return false;
         }
-
         return true
     }
 

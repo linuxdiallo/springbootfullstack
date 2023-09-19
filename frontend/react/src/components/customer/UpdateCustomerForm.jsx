@@ -75,21 +75,21 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
                                 label="Name"
                                 name="name"
                                 type="text"
-                                placeholder="Jane"
+                                placeholder="Your name"
                             />
 
                             <MyTextInput
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                placeholder="jane@formik.com"
+                                placeholder="jane@test.com"
                             />
 
                             <MyTextInput
                                 label="Age"
                                 name="age"
                                 type="number"
-                                placeholder="20"
+                                placeholder="Your age"
                             />
                             <Button isDisabled={ !(isValid && dirty) || isSubmitting } type="submit">Submit</Button>
                         </Stack>
