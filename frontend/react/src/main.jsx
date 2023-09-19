@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><App /></ProtectedRoute>
     },
     {
-        path: "setting",
+        path: "settings",
         element: <ProtectedRoute><Setting /></ProtectedRoute>
     }
 ])
