@@ -27,6 +27,11 @@ spring:
     show-sql: true
   main:
     web-application-type: servlet
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
 
 cors:
   allowed-origins: "*"
