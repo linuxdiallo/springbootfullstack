@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+spring:
+  datasource:
+
+#    For local database config
+
+#    url: jdbc:postgresql://localhost:5432/customer
+#    username: amigoscode
+#    password: password
+
+# for docker database config
+    url: jdbc:postgresql://awseb-e-zm3v3pm9un-stack-awsebrdsdatabase-h86478l0tpoz.cfzpaun3brxq.eu-west-1.rds.amazonaws.com:5432/ebdb
+    username: amigoscode
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL92Dialect
+        format_sql: true
+    show-sql: true
+  main:
+    web-application-type: servlet
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
