@@ -49,7 +49,7 @@ public class SecurityFilterChainConfig {
                 .permitAll()
                 .requestMatchers(
                         HttpMethod.GET,
-                        "/login"
+                        "/ping"
                 )
                 .permitAll()
                 .requestMatchers(
