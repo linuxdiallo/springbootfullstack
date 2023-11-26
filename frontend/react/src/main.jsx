@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import {createStandaloneToast} from '@chakra-ui/react'
+import {createStandaloneToast, Text} from '@chakra-ui/react'
 import {ChakraProvider} from '@chakra-ui/react'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Login from "./components/login/Login.jsx";
@@ -10,6 +9,8 @@ import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
 import Setting from "./components/Setting.jsx";
 import './index.css'
 import Signup from "./components/signup/Signup.jsx";
+import Customer from "./Customer.jsx";
+import Home from "./Home.jsx";
 
 const {ToastContainer} = createStandaloneToast()
 
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
     },
     {
         path: "dashboard",
-        element: <ProtectedRoute><App /></ProtectedRoute>
+        element: <ProtectedRoute><Home/></ProtectedRoute>
+    },
+    {
+        path: "dashboard/customers",
+        element: <ProtectedRoute><Customer /></ProtectedRoute>
     },
     {
         path: "settings",
