@@ -9,6 +9,8 @@ on:
   workflow_dispatch:
 jobs:
   deploy:
+    ## this if statement disable this react cd beacause we use amplify deployement now
+    if: false
     runs-on: ubuntu-latest
     defaults:
       run:

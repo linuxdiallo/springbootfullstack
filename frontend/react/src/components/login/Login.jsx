@@ -56,7 +56,7 @@ const LoginFrom = () => {
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(false);
                 login(values).then(res => {
-                    navigate("/dashboard")
+                    navigate("/dashboard/customers")
                     console.log("Successfully logged in")
                 }).catch(err => {
                     errorNotification(
