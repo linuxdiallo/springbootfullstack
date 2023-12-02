@@ -41,7 +41,7 @@ public class JWTUtil {
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuer("https://codepro.com")
+                .setIssuer("https://realize-soft.com")
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(
                         Date.from(
