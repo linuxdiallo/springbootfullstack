@@ -1,8 +1,11 @@
 **/target/
-**/node_modules
 **/.idea/
+**/node_modules/
+**/.DS_Store
+**/*.iml
 
 # Javascript
+
 # Logs
 logs
 *.log
@@ -12,7 +15,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
 dist
 dist-ssr
 *.local
@@ -42,5 +44,3 @@ typings
 !.vscode/tasks.json
 !.vscode/launch.json
 .history/*
-
-
