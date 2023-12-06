@@ -1,0 +1,41 @@
+<p-card [style]="{width:'316px'}" class="p-card-shadow text-center">
+  <ng-template pTemplate="header">
+    <div>
+      <img
+        src="https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+        class="border-round-top cover"
+        height="120"
+        alt="Card">
+    </div>
+    <div class="flex justify-content-center" style="margin-top: -50px">
+      <img
+        [src]="customerImage"
+        class="customer-avatar"
+        alt="Customer card">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <p-badge
+      [value]="'' + (customerIndex + 1)"
+    ></p-badge>
+    <h2>{{ customer.name }}</h2>
+    <p class="text-gray-600">{{ customer.email }}</p>
+    <p class="text-gray-600">{{ customer.age }} | {{customer.gender}}</p>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      (click)="onUpdate()"
+      pButton
+      label="Update"
+      class="p-button-secondary p-button-outlined p-button-rounded"
+    >
+    </button>
+    <button
+      (click)="onDelete()"
+      pButton
+      label="Delete"
+      class="p-button-danger p-button-outlined p-button-rounded ml-3"
+    >
+    </button>
+  </ng-template>
+</p-card>
