@@ -1,6 +1,8 @@
 package com.codepro.customer;
 
 import com.codepro.exception.ResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +19,8 @@ public class CustomerJPADataAccessService implements CustomerDao{
 
     @Override
     public List<Customer> selectAllCustomers() {
-        return customerRepository.findAll();
+        Page<Customer> page = customerRepository.findAll(Pageable.ofSize(20));
+        return page.getContent();
     }
 
     @Override
