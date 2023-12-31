@@ -27,7 +27,7 @@ public class Main {
 
 
 
-    @Bean
+   /* @Bean
     CommandLineRunner runner(
             CustomerRepository customerRepository,
             PasswordEncoder passwordEncoder,
@@ -40,7 +40,7 @@ public class Main {
             //createRandomCustomer(customerRepository, passwordEncoder);
             //testBucketUploadAndDownload(s3Service, s3Buckets);
         };
-    }
+    }*/
 
     private  void testBucketUploadAndDownload(S3Service s3Service, S3Buckets s3Buckets) throws IOException {
 
