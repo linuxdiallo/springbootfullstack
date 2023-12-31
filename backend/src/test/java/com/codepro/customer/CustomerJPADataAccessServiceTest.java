@@ -1,5 +1,6 @@
 package com.codepro.customer;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
@@ -45,7 +48,7 @@ class CustomerJPADataAccessServiceTest {
         assertThat(expected).isEqualTo(customers);
         ArgumentCaptor<Pageable> pageArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
         verify(customerRepository).findAll(pageArgumentCaptor.capture());
-        assertThat(pageArgumentCaptor.getValue()).isEqualTo(Pageable.ofSize(20));
+        assertThat(pageArgumentCaptor.getValue()).isEqualTo(Pageable.ofSize(100));
     }
 
     @Test
@@ -84,7 +87,7 @@ class CustomerJPADataAccessServiceTest {
         String email = "foo@test.com";
 
         // When
-        underTest.existsPersonWithEmail(email);
+        underTest.existsCustomerByEmail(email);
 
         // Then
 
@@ -97,7 +100,7 @@ class CustomerJPADataAccessServiceTest {
         int id = 1;
 
         // When
-        underTest.existsPersonWithId(id);
+        underTest.existsCustomerById(id);
 
         // Then
 
@@ -133,5 +136,18 @@ class CustomerJPADataAccessServiceTest {
         // Then
 
         verify(customerRepository).save(customer);
+    }
+
+    @Test
+    void canUpdateProfileImageId() {
+        // Given
+        String profileImageId = "22222";
+        Integer customerId = 1;
+
+        // When
+        underTest.updateCustomerProfileImageId(profileImageId, customerId);
+
+        // Then
+        verify(customerRepository).updateProfileImageId(profileImageId, customerId);
     }
 }

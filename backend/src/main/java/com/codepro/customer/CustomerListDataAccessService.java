@@ -9,6 +9,12 @@ import java.util.Optional;
 @Repository("list")
 public class CustomerListDataAccessService implements CustomerDao {
     private static List<Customer> customers;
+    private final CustomerRepository customerRepository;
+
+    public CustomerListDataAccessService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
     static {
         customers = new ArrayList<>();
         Customer alex = new Customer(1, "Alexa", "alex@gmail.com", "password", 21, Gender.MALE);
@@ -34,13 +40,13 @@ public class CustomerListDataAccessService implements CustomerDao {
     }
 
     @Override
-    public boolean existsPersonWithEmail(String email) {
+    public boolean existsCustomerByEmail(String email) {
         return customers.stream()
                 .anyMatch(c -> c.getEmail().equals(email));
     }
 
     @Override
-    public boolean existsPersonWithId(Integer id) {
+    public boolean existsCustomerById(Integer id) {
         return customers.stream()
                 .anyMatch(c -> c.getId().equals(id));
     }
@@ -64,5 +70,13 @@ public class CustomerListDataAccessService implements CustomerDao {
         return customers.stream()
                 .filter(c -> c.getUsername().equals(email))
                 .findFirst();
+    }
+
+    @Override
+    public void updateCustomerProfileImageId(String profileImageId, Integer customerId) {
+        // TODO: Implements this 😁
+        customers.stream().filter(c -> c.getId().equals(customerId))
+                .findFirst()
+                .ifPresent(customer -> customer.setProfileImageId(profileImageId));
     }
 }

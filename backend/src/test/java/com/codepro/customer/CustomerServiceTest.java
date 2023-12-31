@@ -3,14 +3,19 @@ package com.codepro.customer;
 import com.codepro.exception.DuplicateResourceException;
 import com.codepro.exception.RequestValidationExeception;
 import com.codepro.exception.ResourceNotFoundException;
+import com.codepro.s3.S3Buckets;
+import com.codepro.s3.S3Service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +29,10 @@ class CustomerServiceTest {
     private CustomerDao customerDao;
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private S3Service s3Service;
+    @Mock
+    private S3Buckets s3Buckets;
     private final CustomerDTOMapper customerDTOMapper = new CustomerDTOMapper();
     private CustomerService underTest;
     //private AutoCloseable autoCloseable;
@@ -34,8 +43,9 @@ class CustomerServiceTest {
         underTest = new CustomerService(
                 customerDao,
                 passwordEncoder,
-                customerDTOMapper
-        );
+                customerDTOMapper,
+                s3Service,
+                s3Buckets);
     }
 
     @Test
@@ -91,7 +101,7 @@ class CustomerServiceTest {
         // Given
         String email = "alex@gmail.com";
 
-        when(customerDao.existsPersonWithEmail(email)).thenReturn(false);
+        when(customerDao.existsCustomerByEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 "Alex", "alex@gmail.com", "password", 21, Gender.MALE
@@ -124,7 +134,7 @@ class CustomerServiceTest {
         // Given
         String email = "alex@gmail.com";
 
-        when(customerDao.existsPersonWithEmail(email)).thenReturn(true);
+        when(customerDao.existsCustomerByEmail(email)).thenReturn(true);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 "Alex", "alex@gmail.com", "password", 21, Gender.MALE
@@ -145,7 +155,7 @@ class CustomerServiceTest {
     void deleteCustomerById() {
         // Given
         int id = 10;
-        when(customerDao.existsPersonWithId(id)).thenReturn(true);
+        when(customerDao.existsCustomerById(id)).thenReturn(true);
 
         // When
         underTest.deleteCustomerById(id);
@@ -159,7 +169,7 @@ class CustomerServiceTest {
     void willThrowDeleteCustomerByIdNotExist() {
         // Given
         int id = 10;
-        when(customerDao.existsPersonWithId(id)).thenReturn(false);
+        when(customerDao.existsCustomerById(id)).thenReturn(false);
 
         // When
         // Then
@@ -237,7 +247,7 @@ class CustomerServiceTest {
                 "Alexandro", newEmail, 23
         );
 
-        when(customerDao.existsPersonWithEmail(newEmail)).thenReturn(false);
+        when(customerDao.existsCustomerByEmail(newEmail)).thenReturn(false);
 
         // When
         underTest.updateCustomer(id, updateRequest);
@@ -303,7 +313,7 @@ class CustomerServiceTest {
                 null, newEmail, null
         );
 
-        when(customerDao.existsPersonWithEmail(newEmail)).thenReturn(false);
+        when(customerDao.existsCustomerByEmail(newEmail)).thenReturn(false);
 
         // When
         underTest.updateCustomer(id, updateRequest);
@@ -371,7 +381,7 @@ class CustomerServiceTest {
                 null, newEmail, null
         );
 
-        when(customerDao.existsPersonWithEmail(newEmail)).thenReturn(true);
+        when(customerDao.existsCustomerByEmail(newEmail)).thenReturn(true);
 
         // When
         assertThatThrownBy(() -> underTest.updateCustomer(id, updateRequest))
@@ -406,5 +416,178 @@ class CustomerServiceTest {
         // Then
 
         verify(customerDao, never()).updateCustomer(any());
+    }
+
+    @Test
+    void updateCustomerWillThrowWhenCustomerDoesNotExist() {
+        // Given
+        int customerId = 10;
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
+
+        // When
+        assertThatThrownBy(()-> underTest.updateCustomer(customerId, any()))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("customer with id [%s] not found".formatted(customerId));
+
+        //Then
+        verifyNoMoreInteractions(customerDao);
+    }
+
+    @Test
+    void canUploadProfileImage() {
+        // Given
+        int customerId = 10;
+
+        when(customerDao.existsCustomerById(customerId)).thenReturn(true);
+
+        byte[] bytes = "Hello World".getBytes();
+
+        MultipartFile multipartFile = new MockMultipartFile(
+                "file",
+                bytes
+        );
+        String bucket = "customer-bucket";
+        when(s3Buckets.getCustomer()).thenReturn(bucket);
+        // When
+         underTest.uploadCustomerProfileImage(customerId, multipartFile);
+
+        // Then
+
+        ArgumentCaptor<String> profileImageArgumentCaptor =
+                ArgumentCaptor.forClass(String.class);
+
+        verify(customerDao).updateCustomerProfileImageId(
+                profileImageArgumentCaptor.capture(),
+                eq(customerId)
+        ); // we use eq expression because we are getting the first parameter value from an ArgumentCaptor
+
+        verify(s3Service).putObject(
+                bucket,
+                "profile-images/%s/%s".formatted(customerId, profileImageArgumentCaptor.getValue()),
+                bytes
+        );
+    }
+
+    @Test
+    void cannotUploadProfileImageWhenCustomerDoesNotExists() {
+        // Given
+
+        int customerId = 10;
+        when(customerDao.existsCustomerById(customerId)).thenReturn(false);
+
+        // When
+
+          assertThatThrownBy(
+                  () -> underTest.uploadCustomerProfileImage(customerId, mock(MultipartFile.class))
+                 )
+                  .isInstanceOf(ResourceNotFoundException.class)
+                  .hasMessage("customer with id [%s] not found".formatted(customerId));
+
+        // Then
+
+        verify(customerDao).existsCustomerById(customerId);
+        verifyNoMoreInteractions(customerDao);
+        verifyNoInteractions(s3Buckets);
+        verifyNoInteractions(s3Service);
+    }
+
+    @Test
+    void cannotUploadProfileImageWhenExceptionIsThrown() throws IOException {
+        // Given
+        int customerId = 10;
+
+        when(customerDao.existsCustomerById(customerId)).thenReturn(true);
+
+        MultipartFile multipartFile = mock(MultipartFile.class);
+        when(multipartFile.getBytes()).thenThrow(IOException.class);
+
+        String bucket = "customer-bucket";
+        when(s3Buckets.getCustomer()).thenReturn(bucket);
+
+        // When
+         assertThatThrownBy(() -> {
+             underTest.uploadCustomerProfileImage(customerId, multipartFile);
+         })
+                 .isInstanceOf(RuntimeException.class)
+                 .hasMessage("failed to upload profile image")
+                 .hasRootCauseInstanceOf(IOException.class);
+
+        // Then
+        verify(customerDao, never()).updateCustomerProfileImageId(any(), any());
+
+    }
+
+    @Test
+    void canDownloadProfileImage() {
+        // Given
+        int customerId = 10;
+        String profileImageId = "22222";
+        Customer customer = new Customer(
+                customerId, "Alex",
+                "alex@gmail.com",
+                "password", 34,
+                Gender.MALE,
+                profileImageId
+        );
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(customer));
+
+        String bucket = "customer-bucket";
+        when(s3Buckets.getCustomer()).thenReturn(bucket);
+
+        byte[] expectedImage = "image".getBytes();
+
+        when(s3Service.getObject(bucket, "profile-images/%s/%s".formatted(customerId, profileImageId))
+        ).thenReturn(expectedImage);
+
+        // When
+        byte[] actualImage = underTest.getCustomerProfileImage(customerId);
+
+        //Then
+        assertThat(actualImage).isEqualTo(expectedImage);
+    }
+
+
+    @Test
+    void cannotDownloadProfileImageWhenCustomerDoesNotHaveProfileImageId() {
+        // Given
+        int customerId = 10;
+        Customer customer = new Customer(
+                customerId, "Alex",
+                "alex@gmail.com",
+                "password",
+                34,
+                Gender.MALE
+        );
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.of(customer));
+
+        // When
+        //Then
+        assertThatThrownBy(
+                () -> underTest.getCustomerProfileImage(customerId)
+        )
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Customer with id [%s] profile image not found".formatted(customerId));
+
+        verifyNoInteractions(s3Service);
+        verifyNoInteractions(s3Buckets);
+    }
+
+    @Test
+    void cannotDownloadProfileImageWhenCustomerDoesNotExist() {
+        // Given
+        int customerId = 10;
+
+        when(customerDao.selectCustomerById(customerId)).thenReturn(Optional.empty());
+
+        // When
+        //Then
+        assertThatThrownBy(
+                () -> underTest.getCustomerProfileImage(customerId)
+        )
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("customer with id [%s] not found".formatted(customerId));
+
+        verifyNoInteractions(s3Service);
+        verifyNoInteractions(s3Buckets);
     }
 }

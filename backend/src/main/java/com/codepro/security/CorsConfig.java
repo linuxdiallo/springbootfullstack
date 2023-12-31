@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.sql.Date;
 import java.time.Duration;
@@ -37,7 +39,7 @@ public class CorsConfig {
     @Value("#{'${cors.exposed-headers}'.split(',')}")
     private List<String> exposeHeaders;
 
-   /* @Override
+/* @Override
     public void addCorsMappings(CorsRegistry registry) {
         CorsRegistration corsRegistration = registry.addMapping("/api/**");
         allowedOrigins.forEach(corsRegistration::allowedOrigins);
