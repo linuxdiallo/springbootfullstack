@@ -37,6 +37,11 @@
           "containerPath": "/opt/sonarqube/data",
           "readOnly": false
         }
+      ],
+      "volumes": [
+        {
+          "name": "sonarqube_data"
+        }
       ]
     }
   ]
