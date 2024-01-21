@@ -18,6 +18,6 @@ public class TestController {
 
     @GetMapping("/ping")
     public PingPong getPingPong() {
-        return new PingPong("Pong: %s".formatted(++COUNT));
+        return new PingPong("Pong: -> %s".formatted(++COUNT));
     }
 }
