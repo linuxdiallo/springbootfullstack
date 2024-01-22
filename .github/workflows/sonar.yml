@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/sonar.yml
+      - .github/**/sonar.yml
 
 
 jobs:
