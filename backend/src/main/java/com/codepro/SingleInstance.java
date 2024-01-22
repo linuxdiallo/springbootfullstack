@@ -7,11 +7,13 @@ import java.util.Random;
  * This use singleton pattern
  */
 public class SingleInstance {
-    private static SecureRandom INSTANCE;
+    // SecureRandom is more secure than Random
+    // this is a sonar report
+    private static SecureRandom uniqueInstance;
     public static Random getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SecureRandom();
+        if (uniqueInstance == null) {
+            uniqueInstance = new SecureRandom();
         }
-        return INSTANCE;
+        return uniqueInstance;
     }
 }
