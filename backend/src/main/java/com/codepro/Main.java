@@ -62,7 +62,7 @@ public class Main {
     private static void createRandomCustomer(CustomerRepository customerRepository,
                                              PasswordEncoder passwordEncoder) {
         Faker faker = new Faker();
-        Random random = new Random();
+        Random random = RandomSingleInstance.getInstance();
 
         int age = random.nextInt(16, 99);
 
