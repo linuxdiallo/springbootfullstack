@@ -51,3 +51,5 @@ aws:
    mock: true
    buckets:
      customer: fs-codepro-customer-test
+jwt:
+  token: foobar_123456789_foobar_123456789_foobar_123456789_foobar_123456789_foobar_123456789_foobar_123456789
