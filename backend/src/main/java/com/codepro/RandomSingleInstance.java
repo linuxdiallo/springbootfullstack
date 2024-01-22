@@ -8,6 +8,7 @@ public class RandomSingleInstance {
         if (INSTANCE == null) {
             INSTANCE = new Random();
         }
+
         return INSTANCE;
     }
 }
