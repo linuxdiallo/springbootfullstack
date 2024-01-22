@@ -6,10 +6,8 @@ import com.codepro.customer.Gender;
 import com.codepro.s3.S3Buckets;
 import com.codepro.s3.S3Service;
 import com.github.javafaker.Faker;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
@@ -62,8 +60,7 @@ public class Main {
     private static void createRandomCustomer(CustomerRepository customerRepository,
                                              PasswordEncoder passwordEncoder) {
         Faker faker = new Faker();
-        Random random = RandomSingleInstance.getInstance();
-
+        Random random = SingleInstance.getInstance();
         int age = random.nextInt(16, 99);
 
         Gender gender = (age % 2 == 0) ? Gender.MALE : Gender.FEMALE;
