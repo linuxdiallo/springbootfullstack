@@ -10,6 +10,8 @@ public class SingleInstance {
     // SecureRandom is more secure than Random
     // this is a sonar report
     private static SecureRandom uniqueInstance;
+
+    private SingleInstance() {}
     public static Random getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new SecureRandom();
