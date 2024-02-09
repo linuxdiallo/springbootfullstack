@@ -41,6 +41,7 @@ const MyTextInput = ({ label, ...props }) => {
 };
 const MyDropzone = ({ customerId, fetchCustomers }) => {
     const onDrop = useCallback(acceptedFiles => {
+
         const formData = new FormData();
         formData.append("file", acceptedFiles[0]);
 
