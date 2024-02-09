@@ -44,7 +44,6 @@ cors:
   allowed-methods: "*"
   allowed-headers: "*"
   exposed-headers: "*"
-
 aws:
   region: eu-west-1
   s3:
