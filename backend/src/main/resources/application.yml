@@ -3,6 +3,10 @@ server:
   error:
     include-message: always
 
+springdoc:
+  api-docs:
+    path: /api-docs
+
 spring:
   datasource:
 
@@ -22,7 +26,9 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
+        # deprecated use org.hibernate.dialect.PostgreSQLDialect instead
         dialect: org.hibernate.dialect.PostgreSQL92Dialect
+        #dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
   main:
