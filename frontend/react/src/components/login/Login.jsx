@@ -114,6 +114,9 @@ const Login = () => {
                     <Link color={"blue.500"} href={"/signup"}>
                         Don't have an account? Signup now.
                     </Link>
+                    <Link mt={'10'}   color={"black"} href={`${import.meta.env.VITE_API_BASE_URL}/swagger-ui/index.html`} type='blank'>
+                       api-doc
+                    </Link>
                 </Stack>
             </Flex>
             <Flex
