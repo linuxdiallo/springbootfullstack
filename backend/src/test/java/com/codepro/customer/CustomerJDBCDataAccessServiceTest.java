@@ -246,7 +246,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainers {
     }
 
      // i commented this method because sonar was failing when try to execute this test
-    //@Test
+    @Test
     void updateCustomerEmail() {
         // Given
         String email = faker.internet().safeEmailAddress()+ "-" + UUID.randomUUID();

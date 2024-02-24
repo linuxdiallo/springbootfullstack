@@ -10,6 +10,9 @@ server:
   port: 8080
   error:
     include-message: always
+#  tomcat:
+#    threads:
+#      max: 10
 
 springdoc:
   api-docs:
