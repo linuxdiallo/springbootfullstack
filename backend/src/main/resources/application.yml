@@ -10,9 +10,9 @@ server:
   port: 8080
   error:
     include-message: always
-#  tomcat:
-#    threads:
-#      max: 10
+  tomcat:
+    threads:
+      max: 100
 
 springdoc:
   api-docs:
@@ -21,13 +21,13 @@ springdoc:
     operations-sorter: method
 spring:
   datasource:
-#    hikari:
-#      connection-timeout: 20000
-#      max-lifetime: 1000
-#      auto-commit: true
-#      minimum-idle: 10
-#      maximum-pool-size: 10
-#      idle-timeout: 10000
+    hikari:
+      connection-timeout: 20000
+      max-lifetime: 1000
+      auto-commit: true
+      minimum-idle: 10
+      maximum-pool-size: 100
+      idle-timeout: 10000
 
     #    For local database config
 
